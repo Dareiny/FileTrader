@@ -7,14 +7,17 @@
     <UserSecretsId>1e818722-f38d-4ac6-a3ae-758fec086e89</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\FileTrader.AppServices\FileTrader.AppServices.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

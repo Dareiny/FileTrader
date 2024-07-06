@@ -16,6 +16,6 @@ namespace FileTrader.AppServices.Users.Services
         /// Возвращает всех пользователей.
         /// </summary>
         /// <returns>Список пользователей <see cref="UserDTO"/>.</returns>
-        Task<IReadOnlyCollection<UserDTO>> GetUsersAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<UserDTO>> GetUsersAsync(CancellationToken cancellationToken);
     }
 }

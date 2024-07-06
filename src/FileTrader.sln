@@ -9,23 +9,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{313AA9EE-769E-4937-B5AB-EF06E8A009EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastrucure", "Infrastrucure", "{7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{E4FD54AA-98B1-48BA-B1F2-5763B2EB1548}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.AppServices", "Application\FileTrader.AppServices\FileTrader.AppServices.csproj", "{1A6AC48A-C025-4AF4-8B77-192C188F46ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.AppServices", "Application\FileTrader.AppServices\FileTrader.AppServices.csproj", "{1A6AC48A-C025-4AF4-8B77-192C188F46ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.Contracts", "Contracts\FileTrader.Contracts\FileTrader.Contracts.csproj", "{AC0703C6-56DC-4B94-94AD-6B96A67B780F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.Contracts", "Contracts\FileTrader.Contracts\FileTrader.Contracts.csproj", "{AC0703C6-56DC-4B94-94AD-6B96A67B780F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.Domain", "Domain\FileTrader.Domain\FileTrader.Domain.csproj", "{B2964BD0-5993-435C-AEB3-530B8D169271}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.Domain", "Domain\FileTrader.Domain\FileTrader.Domain.csproj", "{B2964BD0-5993-435C-AEB3-530B8D169271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.Infrastructure", "Infrastructure\FileTrader.Infrastructure\FileTrader.Infrastructure.csproj", "{CA4EEEC1-9532-457B-887E-55D93AC8FABD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.Infrastructure", "Infrastructure\FileTrader.Infrastructure\FileTrader.Infrastructure.csproj", "{CA4EEEC1-9532-457B-887E-55D93AC8FABD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.ComponentRegistrar", "Infrastructure\FileTrader.ComponentRegistrar\FileTrader.ComponentRegistrar.csproj", "{4DD8FECB-91DF-49E2-8651-407349A0337F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.ComponentRegistrar", "Infrastructure\FileTrader.ComponentRegistrar\FileTrader.ComponentRegistrar.csproj", "{4DD8FECB-91DF-49E2-8651-407349A0337F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.API", "Hosts\FileTrader.API\FileTrader.API.csproj", "{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.API", "Hosts\FileTrader.API\FileTrader.API.csproj", "{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.DataAccess", "Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj", "{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.DataAccess", "Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj", "{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
