@@ -17,6 +17,6 @@ namespace FileTrader.AppServices.Users.Repositories
         /// </summary>
         /// <param name="cancellationToken">токен отмены операции.</param>
         /// <returns>Список пользователей.</returns>
-        Task<IEnumerable<UserDTO>> GetAll(CancellationToken cancellationToken);
+        Task<IEnumerable<UserDTO>> GetAllAsync(CancellationToken cancellationToken);
     }
 }

@@ -23,9 +23,9 @@ namespace FileTrader.AppServices.Users.Services
         }
 
         /// <inheritdoc />
-        public Task<IReadOnlyCollection<UserDTO>> GetUsersAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<UserDTO>> GetUsersAsync(CancellationToken cancellationToken)
         {
-            return _userRepository.GetAll(cancellationToken);
+            return await _userRepository.GetAllAsync(cancellationToken);
         }
     }
 }

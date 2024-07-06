@@ -1,9 +1,13 @@
 ﻿using FileTrader.AppServices.Users.Services;
+using FileTrader.Contracts.Users;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace FileTrader.API.Controllers
 {
-
+    /// <summary>
+    /// Контроллер для работы с пользователем
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class UserController : ControllerBase
@@ -20,12 +24,14 @@ namespace FileTrader.API.Controllers
 
 
         /// <summary>
-        /// Получить список всех пользователей.
+        /// Возвращает список всех пользователей.
         /// </summary>
         /// <param name="cancellationToken">токен отмены операции.</param>
         /// <returns>список всех пользователей <see cref="OkObjectResult"/>.</returns>
-        [HttpGet]
-        [Route ("all")]
+        [HttpGet("all")]
+        [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetAllUsers (CancellationToken cancellationToken)
         {
             var result = await _userService.GetUsersAsync (cancellationToken);
