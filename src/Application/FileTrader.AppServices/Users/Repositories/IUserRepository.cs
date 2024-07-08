@@ -1,4 +1,5 @@
-﻿using FileTrader.Contracts.Users;
+﻿using FileTrader.AppServices.Specifications;
+using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,23 @@ namespace FileTrader.AppServices.Users.Repositories
         /// <summary>
         /// Возвращает всех пользователей.
         /// </summary>
-        /// <param name="cancellationToken">токен отмены операции.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Список пользователей.</returns>
-        Task<IEnumerable<UserDTO>> GetAllAsync(CancellationToken cancellationToken);
-
-        Task<IEnumerable<UserDTO>> GetFiltered(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken);
+        //Task<ResultWithPagination<UserDTO>> GetAllAsync(GetAllUsersRequest request,CancellationToken cancellationToken);
+        /// <summary>
+        /// Возвращает пользователей по заданной спецификацией логике.
+        /// </summary>
+        /// <param name="specification">Спецификация.</param>
+        /// <param name="cancellation">Токен отмены операции.</param>
+        /// <returns></returns>
+        Task<ResultWithPagination<UserDTO>> GetAllBySpecification(GetAllUsersRequest request, Specification<User> specification, CancellationToken cancellation);
 
         /// <summary>
         /// Возвращает все элементы сущности "пользователи" по идентификатору.
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns><see cref="UserDTO"/>.</returns>
-        Task<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<UserDTO> GetByIdAsync(Specification<User> specification, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет записи.

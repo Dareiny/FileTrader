@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using FileTrader.AppServices.Specifications;
 using FileTrader.AppServices.Users.Repositories;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
@@ -40,29 +41,56 @@ namespace FileTrader.DataAccess.Users.Repository
 
 
         /// <inheritdoc />
-        public async Task<IEnumerable<UserDTO>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            //var users = UserList();
+        //public async Task<ResultWithPagination<UserDTO>> GetAllAsync(GetAllUsersRequest request, CancellationToken cancellationToken)
+        //{
+        //    var result = new ResultWithPagination<UserDTO>();
 
-            return await _repository.GetAll()
-                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+        //    var query = _repository.GetAll();
+
+        //    var elementsCount = await query.CountAsync(cancellationToken);
+        //    result.AvailablePages = elementsCount/request.BatchSize;
+        //    if (elementsCount % request.BatchSize > 0) result.AvailablePages++;
+            
+        //    var paginationQuery = await query
+        //        .OrderBy(user => user.Id)
+        //        .Skip(request.BatchSize * (request.PageNumber - 1))
+        //        .Take(request.BatchSize)
+        //        .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+        //        .ToListAsync();
+
+        //    result.Result = paginationQuery;
+        //    return result;
+        //}
+
+        public async Task<ResultWithPagination<UserDTO>> GetAllBySpecification(GetAllUsersRequest request, Specification<User> specification, CancellationToken cancellationToken)
+        {
+            var result = new ResultWithPagination<UserDTO>();
+
+            var query = _repository.GetAll().Where(specification.ToExpression());
+
+            var elementsCount = await query.CountAsync(cancellationToken);
+            result.AvailablePages = elementsCount / request.BatchSize;
+            if (elementsCount % request.BatchSize > 0) result.AvailablePages++;
+
+            var paginationQuery = await query
+               .OrderBy(user => user.Id)
+               .Skip(request.BatchSize * (request.PageNumber - 1))
+               .Take(request.BatchSize)
+               .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+               .ToListAsync();
+
+            result.Result = paginationQuery;
+            return result;
         }
 
-        public async Task<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<UserDTO> GetByIdAsync(Specification<User> specification, CancellationToken cancellationToken)
         {
-            return await _repository.GetAll().Where(s => s.Id == id)
+            return await _repository.GetAll().Where(specification.ToExpression())
                 .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
         }
 
-        public async Task<IEnumerable<UserDTO>> GetFiltered(Expression<Func<User, bool>> predicate,CancellationToken cancellationToken)
-        {
-            return await _repository.GetAll().Where(predicate)
-                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
-                .ToListAsync();
-        }
 
         public async Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken)
         {

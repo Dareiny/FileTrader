@@ -27,15 +27,33 @@ namespace FileTrader.API.Controllers
         /// <summary>
         /// Возвращает список всех пользователей.
         /// </summary>
+        /// <param name="request">Запрос.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Список всех пользователей <see cref="OkObjectResult"/>.</returns>
         [HttpGet("all")]
+        [ProducesResponseType(typeof(ResultWithPagination<UserDTO>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> GetAllUsers([FromQuery] GetAllUsersRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _userService.GetUsersAsync(request ,cancellationToken);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Возвращает список пользователей по имени.
+        /// </summary>
+        /// <param name="request1">Запрос всех пользователей.</param>
+        /// <param name="request2">Запрос по имени.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Список всех пользователей <see cref="OkObjectResult"/>.</returns>
+        [HttpGet("by-name")]
         [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetAllUsers (CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllUsersByName([FromQuery] GetAllUsersRequest request1, [FromQuery] UsersByNameRequest request2 ,CancellationToken cancellationToken)
         {
-            var result = await _userService.GetUsersAsync (cancellationToken);
+            var result = await _userService.GetUsersByNameAsync(request1, request2, cancellationToken);
             return Ok(result);
         }
 
@@ -64,7 +82,7 @@ namespace FileTrader.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(UserDTO),(int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> CreateUser(CreateUserRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateUser([FromQuery] CreateUserRequest request, CancellationToken cancellationToken)
         {
             //var dto = new UserDTO()
             //{
@@ -87,7 +105,7 @@ namespace FileTrader.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> UpdateUser(Guid id, UpdateUserRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUser(Guid id, [FromQuery] UpdateUserRequest request, CancellationToken cancellationToken)
         {
             if (id == Guid.Empty || request == null)
             {

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using FileTrader.AppServices.Specifications;
 using FileTrader.AppServices.Users.Repositories;
+using FileTrader.AppServices.Users.Specifications;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using System;
@@ -43,18 +45,20 @@ namespace FileTrader.AppServices.Users.Services
 
         public async ValueTask<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetByIdAsync(id, cancellationToken);
+            var specification = new ByIdSpecification(id);
+            return await _userRepository.GetByIdAsync(specification, cancellationToken);
         }
 
-        public async Task<IEnumerable<UserDTO>> GetFiltered(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
+        public async Task<ResultWithPagination<UserDTO>> GetUsersAsync(GetAllUsersRequest request, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetFiltered(predicate, cancellationToken);
+            var specification = new TrueSpecification<User>();
+            return await _userRepository.GetAllBySpecification(request, specification, cancellationToken);
         }
 
-        /// <inheritdoc />
-        public async Task<IEnumerable<UserDTO>> GetUsersAsync(CancellationToken cancellationToken)
+        public async Task<ResultWithPagination<UserDTO>> GetUsersByNameAsync(GetAllUsersRequest request1, UsersByNameRequest request2, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetAllAsync(cancellationToken);
+            var specification = new ByNameSpecification(request2.UserName);
+            return await _userRepository.GetAllBySpecification(request1, specification, cancellationToken);
         }
 
         public async Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken)
