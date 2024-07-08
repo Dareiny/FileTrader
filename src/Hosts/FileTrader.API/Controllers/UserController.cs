@@ -66,13 +66,13 @@ namespace FileTrader.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateUser(CreateUserRequest request, CancellationToken cancellationToken)
         {
-            var dto = new UserDTO()
-            {
-                UserName = request.UserName,
-                UserEmail = request.UserEmail
-            };
+            //var dto = new UserDTO()
+            //{
+            //    UserName = request.UserName,
+            //    UserEmail = request.UserEmail
+            //};
 
-            var result = await _userService.AddAsync(dto, cancellationToken);
+            var result = await _userService.AddAsync(request, cancellationToken);
             return CreatedAtAction(nameof(CreateUser), new { result });
         }
 

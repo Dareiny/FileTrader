@@ -34,7 +34,7 @@ namespace FileTrader.AppServices.Users.Services
         /// </summary>
         /// <param name="entity">Записи.</param>
         /// <returns></returns>
-        Task<Guid> AddAsync(UserDTO entity, CancellationToken cancellationToken);
+        Task<Guid> AddAsync(CreateUserRequest entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновляет записи.

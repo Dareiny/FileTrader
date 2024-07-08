@@ -1,4 +1,5 @@
-﻿using FileTrader.AppServices.Users.Repositories;
+﻿using AutoMapper;
+using FileTrader.AppServices.Users.Repositories;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using System;
@@ -14,21 +15,24 @@ namespace FileTrader.AppServices.Users.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
 
         /// <summary>
         /// Инициализирует экземпляр <see cref="UserService"/>.
         /// </summary>
         /// <param name="userRepository"></param>
-        public UserService(IUserRepository userRepository) 
+        public UserService(IUserRepository userRepository, IMapper mapper) 
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Guid> AddAsync(UserDTO entity, CancellationToken cancellationToken)
+        public async Task<Guid> AddAsync(CreateUserRequest request, CancellationToken cancellationToken)
         {
-           entity.Id = Guid.NewGuid();
+           var entity = _mapper.Map<User>(request);
+           
            await _userRepository.AddAsync(entity, cancellationToken);
-
            return entity.Id;
         }
 
