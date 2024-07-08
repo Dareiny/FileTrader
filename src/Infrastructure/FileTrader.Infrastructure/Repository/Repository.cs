@@ -1,4 +1,5 @@
-﻿using FileTrader.Domain.Users.Entity;
+﻿using FileTrader.Domain.Base;
+using FileTrader.Domain.Users.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,9 @@ using System.Threading.Tasks;
 namespace FileTrader.Infrastructure.Repository
 {
     ///<inheritdoc />
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class 
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {
 
-        
 
         protected DbContext DbContext { get; }
         protected DbSet<TEntity> DbSet { get; }
@@ -23,15 +23,16 @@ namespace FileTrader.Infrastructure.Repository
             DbSet = DbContext.Set<TEntity>();
         }
 
-        public async Task AddAsync(TEntity entity)
+        public async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
+            entity.CreatedDate = DateTime.UtcNow;
             await DbSet.AddAsync(entity);
             await DbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await GetByIdAsync(id);
+            var entity = await GetByIdAsync(id,cancellationToken);
             if (entity == null)
             {
                 throw new KeyNotFoundException($"Entity with id {id} not found.");
@@ -46,7 +47,7 @@ namespace FileTrader.Infrastructure.Repository
             return DbSet.AsNoTracking();
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await DbSet.FindAsync(id);
         }
@@ -57,7 +58,7 @@ namespace FileTrader.Infrastructure.Repository
             return DbSet.Where(predicate).AsNoTracking();
         }
 
-        public async Task UpdateAsync(TEntity entity)
+        public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
         {
             DbSet.Update(entity);
             await DbContext.SaveChangesAsync();

@@ -27,28 +27,28 @@ namespace FileTrader.Infrastructure.Repository
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns><see cref="TEntity"/>.</returns>
-        Task<TEntity> GetByIdAsync(Guid id);
+        Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет записи.
         /// </summary>
         /// <param name="entity">Записи.</param>
         /// <returns></returns>
-        Task AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновляет записи.
         /// </summary>
         /// <param name="entity">Записи.</param>
         /// <returns></returns>
-        Task UpdateAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаляет записи по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор</param>
         /// <returns></returns>
-        Task DeleteAsync(Guid id);
+        Task DeleteAsync(Guid id,CancellationToken cancellationToken);
 
     }
 }
