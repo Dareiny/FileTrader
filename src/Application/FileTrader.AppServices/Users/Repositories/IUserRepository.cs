@@ -28,14 +28,14 @@ namespace FileTrader.AppServices.Users.Repositories
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns><see cref="UserDTO"/>.</returns>
-        ValueTask<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
         /// Добавляет записи.
         /// </summary>
         /// <param name="entity">Записи.</param>
         /// <returns></returns>
-        Task AddAsync(UserDTO entity, CancellationToken cancellationToken);
+        Task AddAsync(User entity, CancellationToken cancellationToken);
 
         /// <summary>
         /// Обновляет записи.

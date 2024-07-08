@@ -1,4 +1,6 @@
-﻿using FileTrader.AppServices.Users.Repositories;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using FileTrader.AppServices.Users.Repositories;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using FileTrader.Infrastructure.Repository;
@@ -19,22 +21,16 @@ namespace FileTrader.DataAccess.Users.Repository
     {
  
         private readonly IRepository<User> _repository;
-
-        public UserRepository(IRepository<User> repository)
+        private readonly IMapper _mapper;
+        public UserRepository(IRepository<User> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task AddAsync(UserDTO entity,CancellationToken cancellationToken)
+        public async Task AddAsync(User entity,CancellationToken cancellationToken)
         {
-            var result = new User()
-            {
-                Id = entity.Id,
-                UserName = entity.UserName,
-                UserEmail = entity.UserEmail,
-                Password = entity.Password,
-            };
-            await _repository.AddAsync(result, cancellationToken);
+            await _repository.AddAsync(entity, cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -48,48 +44,29 @@ namespace FileTrader.DataAccess.Users.Repository
         {
             //var users = UserList();
 
-            var users = await _repository.GetAll().ToListAsync(cancellationToken);
-
-            return await Task.Run(()=>users.Select(u => new UserDTO
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                UserEmail = u.UserEmail
-            }),cancellationToken);
+            return await _repository.GetAll()
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
-        public ValueTask<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<UserDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var user = _repository.GetByIdAsync(id, cancellationToken).Result;
+            return await _repository.GetAll().Where(s => s.Id == id)
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
 
-
-            var result = new UserDTO()
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                UserEmail = user.UserEmail,
-
-            };
-            return new ValueTask<UserDTO>(result);
         }
 
         public async Task<IEnumerable<UserDTO>> GetFiltered(Expression<Func<User, bool>> predicate,CancellationToken cancellationToken)
         {
-            var users = _repository.GetFiltered(predicate).ToList();
-
-
-            return await Task.Run(() => users.Select(u => new UserDTO
-            {
-                Id = u.Id,
-                UserName = u.UserName,
-                UserEmail = u.UserEmail,
-            }), cancellationToken);
-
+            return await _repository.GetAll().Where(predicate)
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
 
         public async Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken)
         {
-            var user = _repository.GetByIdAsync(entity.Id, cancellationToken).Result;
+            var user = await _repository.GetByIdAsync(entity.Id, cancellationToken);
             user.UserName = entity.UserName;
             user.UserEmail = entity.UserEmail;
             user.Password = entity.Password;

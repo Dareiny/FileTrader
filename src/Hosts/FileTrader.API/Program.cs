@@ -7,6 +7,7 @@ using FileTrader.DataAccess.Users.Repository;
 using FileTrader.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using FileTrader.ComponentRegistrar;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+builder.Services.AddServices();
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();

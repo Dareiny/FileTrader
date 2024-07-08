@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\FileTrader.Contracts\FileTrader.Contracts.csproj" />
+    <ProjectReference Include="..\..\Domain\FileTrader.Domain\FileTrader.Domain.csproj" />
   </ItemGroup>
 
 </Project>
