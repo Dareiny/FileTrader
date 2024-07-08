@@ -18,9 +18,16 @@ namespace FileTrader.AppServices.Users.Services
         /// Возвращает всех пользователей.
         /// </summary>
         /// <returns>Список пользователей <see cref="UserDTO"/>.</returns>
-        Task<IEnumerable<UserDTO>> GetUsersAsync(CancellationToken cancellationToken);
+        Task<ResultWithPagination<UserDTO>> GetUsersAsync(GetAllUsersRequest request,CancellationToken cancellationToken);
 
-        Task<IEnumerable<UserDTO>> GetFiltered(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken);
+        /// <summary>
+        /// Возвращает пользователей по имени.
+        /// </summary>
+        /// <param name="request">Запрос.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Список пользователей <see cref="UserDTO"/>Коллекция моделей пользователей.</returns>
+        Task<ResultWithPagination<UserDTO>> GetUsersByNameAsync(GetAllUsersRequest request1, UsersByNameRequest request2, CancellationToken cancellationToken);
+
 
         /// <summary>
         /// Возвращает все элементы сущности "пользователи" по идентификатору.

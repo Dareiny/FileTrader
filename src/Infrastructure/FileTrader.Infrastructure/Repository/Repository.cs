@@ -49,7 +49,7 @@ namespace FileTrader.Infrastructure.Repository
 
         public async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await DbSet.FindAsync(id);
+            return await DbSet.FindAsync(id, cancellationToken);
         }
 
         public IQueryable<TEntity> GetFiltered(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
