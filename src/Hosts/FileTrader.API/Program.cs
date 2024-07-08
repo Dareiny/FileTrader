@@ -1,5 +1,11 @@
 using FileTrader.API.Controllers;
+using FileTrader.AppServices.Users.Repositories;
+using FileTrader.AppServices.Users.Services;
 using FileTrader.Contracts.Users;
+using FileTrader.DataAccess;
+using FileTrader.DataAccess.Users.Repository;
+using FileTrader.Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +20,24 @@ builder.Services.AddSwaggerGen(options => {
 });
 builder.Services.AddRazorPages();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("https://localhost:7002") // Укажите адрес вашего клиента
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
+
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
+builder.Services.AddScoped<DbContext>(s => s.GetRequiredService<ApplicationDbContext>());
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,7 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

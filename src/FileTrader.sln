@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.API", "Hosts\Fil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.DataAccess", "Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj", "{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.DbMigrator", "Hosts\FileTrader.DbMigrator\FileTrader.DbMigrator.csproj", "{4BE248ED-575F-4850-B654-4B5B590DF638}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{4DD8FECB-91DF-49E2-8651-407349A0337F} = {7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}
 		{098272F3-2DF8-45C1-95B8-7BAD9D0D267C} = {E4FD54AA-98B1-48BA-B1F2-5763B2EB1548}
 		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5} = {7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}
+		{4BE248ED-575F-4850-B654-4B5B590DF638} = {E4FD54AA-98B1-48BA-B1F2-5763B2EB1548}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9411B114-4C26-4282-B0CD-223827F3C872}
