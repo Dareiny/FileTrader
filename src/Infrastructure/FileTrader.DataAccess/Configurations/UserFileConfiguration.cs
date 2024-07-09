@@ -1,5 +1,4 @@
 ﻿using FileTrader.Domain.Files.Entity;
-using FileTrader.Domain.Users.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

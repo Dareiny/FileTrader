@@ -1,7 +1,6 @@
 ﻿using FileTrader.AppServices.Specifications;
 using FileTrader.Contracts.UserFiles;
 using FileTrader.Domain.Files.Entity;
-using FileTrader.Domain.Users.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileTrader.AppServices.Users.Repositories
+namespace FileTrader.AppServices.UserFiles.Repositories
 {
     /// <summary>
     /// Репозиторий для работы с файлами.
@@ -40,5 +39,13 @@ namespace FileTrader.AppServices.Users.Repositories
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Идентификатор загруженного файла.</returns>
         Task<Guid> UploadAsync(UserFile file, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Скачивание файла
+        /// </summary>
+        /// <param name="id">Идентификатор файла.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Файл <see cref="FileDTO"/>.</returns>
+        Task<FileDTO> DownloadAsync(Guid id, CancellationToken cancellationToken);
     }
 }
