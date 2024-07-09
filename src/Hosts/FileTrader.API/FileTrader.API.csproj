@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj" />
     <ProjectReference Include="..\..\Infrastructure\FileTrader.Infrastructure\FileTrader.Infrastructure.csproj" />
     <ProjectReference Include="..\FileTrader.DbMigrator\FileTrader.DbMigrator.csproj" />
+    <codeFiles Include="..\..\Application\FileTrader.AppServices\UserFiles\Services\IUserService.cs"/>
   </ItemGroup>
 
 </Project>

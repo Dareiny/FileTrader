@@ -1,17 +1,21 @@
-﻿using FileTrader.Domain.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileTrader.Domain.Files.Entity
+namespace FileTrader.Contracts.Users
 {
     /// <summary>
-    /// Сущность файла.
+    /// Модель файла.
     /// </summary>
-    public class UserFile : BaseEntity
+    public class FileDTO
     {
+        /// <summary>
+        /// Идентификатор.
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// Имя файла.
         /// </summary>
@@ -26,10 +30,5 @@ namespace FileTrader.Domain.Files.Entity
         /// Тип контента.
         /// </summary>
         public string ContentType { get; set; }
-
-        /// <summary>
-        /// Длина файла.
-        /// </summary>
-        public int Length { get; set; }
     }
 }

@@ -146,7 +146,7 @@ namespace FileTrader.API.Controllers
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Результат операции <see cref="OkObjectResult"/>.</returns>
         [HttpDelete("{id:Guid}")]
-        [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
         {

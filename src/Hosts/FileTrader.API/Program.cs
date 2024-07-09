@@ -1,8 +1,12 @@
 using FileTrader.API.Controllers;
+using FileTrader.AppServices.UserFiles.Repositories;
+using FileTrader.AppServices.UserFiles.Services;
 using FileTrader.AppServices.Users.Repositories;
 using FileTrader.AppServices.Users.Services;
+using FileTrader.Contracts.UserFiles;
 using FileTrader.Contracts.Users;
 using FileTrader.DataAccess;
+using FileTrader.DataAccess.UserFiles.Repository;
 using FileTrader.DataAccess.Users.Repository;
 using FileTrader.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +40,11 @@ builder.Services.AddServices();
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+builder.Services.AddTransient<IUserFilesService, UserFilesService>();
+builder.Services.AddScoped<IUserFilesRepository, UserFilesRepository>();
+
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
 builder.Services.AddScoped<DbContext>(s => s.GetRequiredService<ApplicationDbContext>());
