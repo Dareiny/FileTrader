@@ -1,5 +1,5 @@
-﻿using FileTrader.Contracts.Users;
-using FileTrader.Domain.Users.Entity;
+﻿using FileTrader.Contracts.UserFiles;
+using FileTrader.Domain.Files.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileTrader.AppServices.Users.Services
+namespace FileTrader.AppServices.UserFiles.Services
 {
     /// <summary>
     /// Сервис работы с файлами.
@@ -37,6 +37,14 @@ namespace FileTrader.AppServices.Users.Services
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Идентификатор загруженного файла.</returns>
         Task<Guid> UploadAsync(FileDTO model, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Скачивание файла
+        /// </summary>
+        /// <param name="id">Идентификатор файла.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Файл <see cref="FileDTO"/>.</returns>
+        Task<FileDTO> DownloadAsync(Guid id, CancellationToken cancellationToken);
     }
 
 }

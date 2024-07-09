@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileTrader.Contracts.Users
+namespace FileTrader.Contracts.UserFiles
 {
     /// <summary>
     /// Модель информации о файле.

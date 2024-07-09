@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FileTrader.ComponentRegistrar.MapProfiles;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace FileTrader.ComponentRegistrar
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<UserProfile>();
+                cfg.AddProfile<FileProfile>();
             });
             config.AssertConfigurationIsValid();
             return config;

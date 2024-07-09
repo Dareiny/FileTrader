@@ -1,4 +1,4 @@
-﻿using FileTrader.AppServices.;
+﻿using FileTrader.AppServices.UserFiles.Services;
 using FileTrader.Contracts.UserFiles;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -28,12 +28,16 @@ namespace FileTrader.API.Controllers
         /// <param name="id">Идентификатор <see cref="Guid"/>.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Файл.</returns>
-        [HttpGet("file")]
+        [HttpGet("get/{id}")]
         [ProducesResponseType(typeof(IEnumerable<FileDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Download(Guid id, CancellationToken cancellationToken)
         {
-            return Ok();
+            var result = await _userFilesService.DownloadAsync(id, cancellationToken);
+            if (result == null) StatusCode((int)HttpStatusCode.NotFound);
+
+            Response.ContentLength = result.Content.Length;
+            return File(result.Content, result.ContentType);
         }
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace FileTrader.API.Controllers
             var bytes = await GetBytesAsync(file, cancellationToken);
             var fileDto = new FileDTO
             {
-                Name = file.Name,
+                Name = file.FileName,
                 Content = bytes,
                 ContentType = file.ContentType,
             };
