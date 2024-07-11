@@ -20,7 +20,7 @@ namespace FileTrader.Contracts.Users
         [StringLength(20)]
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? UserName { get; set; }
+        public string? Login { get; set; }
         /// <summary>
         /// Электронная почта пользователя.
         /// </summary>

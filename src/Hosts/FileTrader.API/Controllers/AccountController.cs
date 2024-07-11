@@ -1,22 +1,62 @@
-﻿using FileTrader.Contracts.Accounts;
+﻿using FileTrader.AppServices.Auth.Services;
+using FileTrader.AppServices.Users.Services;
+using FileTrader.Contracts.Accounts;
+using FileTrader.Contracts.Users;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Claims;
+using System.Text;
 
 namespace FileTrader.API.Controllers
 {
+    /// <summary>
+    /// Контроллер для работы с аккаунтом.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost("register")]
-        public async Task<IActionResult> RegisterAccount(CreateAccountRequest request, CancellationToken cancellationToken)
+        private IConfiguration _configuration;
+        private readonly ITokenService _tokenService;
+        private readonly IUserService _userService;
+        public AccountController(IConfiguration configuration, ITokenService tokenService, IUserService userService)
         {
-            //TODO
-            var result = request;
+            _configuration = configuration;
+            _tokenService = tokenService;
+            _userService = userService;
+        }
 
-            return await Task.Run(() => CreatedAtAction(nameof(RegisterAccount), result),cancellationToken);
+
+        /// <summary>
+        /// Создать сессию.
+        /// </summary>
+        /// <param name="request">Запрос.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Статус операции.</returns>
+        [HttpPost("register")]
+        public async Task<IActionResult> RegisterAccount([FromQuery] CreateUserRequest request, CancellationToken cancellationToken)
+        {
+            // Создаём аккаунт
+            var userId = await _userService.AddAsync(request, cancellationToken);
+
+
+            // Получаем токен
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+            var token = await _tokenService.GenerateToken(request, key);
+            var TokenOut = new TokenDTO
+            {
+                TokenId = new JwtSecurityTokenHandler().WriteToken(token)
+            };
+
+            return CreatedAtAction(nameof(RegisterAccount),
+                new { userId, TokenOut.TokenId }
+                );
         }
 
         /// <summary>
@@ -24,33 +64,23 @@ namespace FileTrader.API.Controllers
         /// </summary>
         /// <param name="request">Запрос.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
-        /// <returns></returns>
+        /// <returns>Статус операции.</returns>
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromQuery] AccountLoginRequest request, CancellationToken cancellationToken)
         {
-            //TODO
-            var result = request;
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
-            return await Task.Run(() => Ok(result), cancellationToken);
-        }
+            var userbyNameRequest = new UsersByNameRequest { Login = request.Login };
+            var userCollection = await _userService.GetUserByNameAsync(userbyNameRequest, cancellationToken);
+            var user = userCollection.Result.FirstOrDefault();
 
-        /// <summary>
-        /// Выход из сессии.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost("Logout")]
-        public async Task Logout()
-        {
-            await HttpContext.SignOutAsync();
-        }
+            if (request.Password != user.Password) {
+                return BadRequest("Неверно введён логин или пароль.");
+            }
 
-        [HttpPost("user-info")]
-        public async Task<AccountDTO> GetUserInfo(CancellationToken cancellationToken)
-        {
-            //TODO
-            var result = new AccountDTO();
+            var token = await _tokenService.GenerateToken(user, key);
 
-            return result;
+            return Ok(token);
         }
     }
 }

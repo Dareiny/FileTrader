@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileTrader.Contracts.Accounts
+namespace FileTrader.Contracts.Users
 {
-    public class LoginRequest
+    public class TokenDTO
     {
+        public string TokenId { get; set; }
     }
 }

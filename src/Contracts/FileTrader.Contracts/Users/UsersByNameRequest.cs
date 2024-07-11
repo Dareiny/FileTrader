@@ -17,6 +17,6 @@ namespace FileTrader.Contracts.Users
         /// </summary>
         [Required]
         [StringLength(20)]
-        public string UserName { get; set; }
+        public string Login { get; set; }
     }
 }

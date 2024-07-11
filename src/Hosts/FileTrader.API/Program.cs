@@ -14,6 +14,14 @@ using Microsoft.OpenApi.Models;
 using FileTrader.ComponentRegistrar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.DependencyInjection;
+using System.Text;
+using FileTrader.API;
+using FileTrader.Domain;
+using Microsoft.AspNetCore.Identity;
+using FileTrader.AppServices.Auth.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,15 +45,10 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("MyPolicy", policy => policy.RequireClaim("MyClaim"));
-});
 
 builder.Services.AddServices();
 
+builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -57,7 +60,50 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DbConnection")));
 builder.Services.AddScoped<DbContext>(s => s.GetRequiredService<ApplicationDbContext>());
 
+//builder.Services.AddIdentity<FileTrader.Domain.IdentityUserApp, IdentityRole>()
+//    .AddDefaultTokenProviders().AddUserStore<ApplicationDbContext>().AddRoleStore<ApplicationDbContext>();
 
+//builder.Services.Configure<IdentityOptions>(options =>
+//{
+//    options.Password.RequireDigit = true;
+//    options.Password.RequireLowercase = true;
+//    options.Password.RequireUppercase = true;
+//    options.Password.RequireNonAlphanumeric = true;
+//    options.Password.RequiredLength = 6;
+//    options.Password.RequiredUniqueChars = 1;
+//});
+
+
+builder.Services.AddSwaggerModule();
+
+
+
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        //options.SaveToken = false;
+        //options.RequireHttpsMetadata = false;
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            //ValidAudience = builder.Configuration["Jwt:Audience"],
+            //ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

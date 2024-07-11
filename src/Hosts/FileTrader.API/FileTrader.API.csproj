@@ -11,6 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
@@ -22,7 +27,9 @@
     <ProjectReference Include="..\..\Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj" />
     <ProjectReference Include="..\..\Infrastructure\FileTrader.Infrastructure\FileTrader.Infrastructure.csproj" />
     <ProjectReference Include="..\FileTrader.DbMigrator\FileTrader.DbMigrator.csproj" />
-    <codeFiles Include="..\..\Application\FileTrader.AppServices\UserFiles\Services\IUserService.cs"/>
+    <codeFiles Include="..\..\Application\FileTrader.AppServices\UserFiles\Services\IUserService.cs" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties controllers_4appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

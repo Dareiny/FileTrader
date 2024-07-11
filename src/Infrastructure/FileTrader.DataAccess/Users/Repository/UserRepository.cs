@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using FileTrader.AppServices.Specifications;
 using FileTrader.AppServices.Users.Repositories;
+using FileTrader.Contracts.General;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using FileTrader.Infrastructure.Repository;
@@ -62,7 +63,7 @@ namespace FileTrader.DataAccess.Users.Repository
         //    return result;
         //}
 
-        public async Task<ResultWithPagination<UserDTO>> GetAllBySpecification(GetAllUsersRequest request, Specification<User> specification, CancellationToken cancellationToken)
+        public async Task<ResultWithPagination<UserDTO>> GetAllBySpecification(PaginationRequest request, Specification<User> specification, CancellationToken cancellationToken)
         {
             var result = new ResultWithPagination<UserDTO>();
 
@@ -95,7 +96,7 @@ namespace FileTrader.DataAccess.Users.Repository
         public async Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(entity.Id, cancellationToken);
-            user.UserName = entity.UserName;
+            user.Login = entity.Login;
             user.UserEmail = entity.UserEmail;
             user.Password = entity.Password;
             await _repository.UpdateAsync(user, cancellationToken);

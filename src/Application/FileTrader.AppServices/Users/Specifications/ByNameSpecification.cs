@@ -19,7 +19,7 @@ namespace FileTrader.AppServices.Users.Specifications
 
         public override Expression<Func<User, bool>> ToExpression()
         {
-            return user => user.UserName == _name;
+            return user => user.Login == _name;
         }
     }
 }

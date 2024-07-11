@@ -1,4 +1,5 @@
 ﻿using FileTrader.AppServices.Specifications;
+using FileTrader.Contracts.General;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using System;
@@ -27,7 +28,7 @@ namespace FileTrader.AppServices.Users.Repositories
         /// <param name="specification">Спецификация.</param>
         /// <param name="cancellation">Токен отмены операции.</param>
         /// <returns></returns>
-        Task<ResultWithPagination<UserDTO>> GetAllBySpecification(GetAllUsersRequest request, Specification<User> specification, CancellationToken cancellation);
+        Task<ResultWithPagination<UserDTO>> GetAllBySpecification(PaginationRequest request, Specification<User> specification, CancellationToken cancellation);
 
         /// <summary>
         /// Возвращает все элементы сущности "пользователи" по идентификатору.

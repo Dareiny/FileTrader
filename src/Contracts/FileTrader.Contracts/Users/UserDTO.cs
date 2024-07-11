@@ -19,7 +19,7 @@ namespace FileTrader.Contracts.Users
         /// <summary>
         /// Имя пользователя.
         /// </summary>
-        public string? UserName { get; set; }
+        public string? Login { get; set; }
         /// <summary>
         /// Электронная почта пользователя.
         /// </summary>
