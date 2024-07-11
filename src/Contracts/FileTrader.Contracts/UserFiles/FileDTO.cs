@@ -30,5 +30,10 @@ namespace FileTrader.Contracts.UserFiles
         /// Тип контента.
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Идентификатор владельца.
+        /// </summary>
+        public Guid OwnerId { get; set; }
     }
 }

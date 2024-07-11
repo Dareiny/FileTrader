@@ -2,6 +2,7 @@
 using FileTrader.AppServices.Specifications;
 using FileTrader.AppServices.Users.Repositories;
 using FileTrader.AppServices.Users.Specifications;
+using FileTrader.Contracts.General;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using System;
@@ -49,16 +50,18 @@ namespace FileTrader.AppServices.Users.Services
             return await _userRepository.GetByIdAsync(specification, cancellationToken);
         }
 
-        public async Task<ResultWithPagination<UserDTO>> GetUsersAsync(GetAllUsersRequest request, CancellationToken cancellationToken)
+        public async Task<ResultWithPagination<UserDTO>> GetUsersAsync(PaginationRequest request, CancellationToken cancellationToken)
         {
             var specification = new TrueSpecification<User>();
             return await _userRepository.GetAllBySpecification(request, specification, cancellationToken);
         }
 
-        public async Task<ResultWithPagination<UserDTO>> GetUsersByNameAsync(GetAllUsersRequest request1, UsersByNameRequest request2, CancellationToken cancellationToken)
+        public async Task<ResultWithPagination<UserDTO>> GetUserByNameAsync(UsersByNameRequest request2, CancellationToken cancellationToken)
         {
-            var specification = new ByNameSpecification(request2.UserName);
-            return await _userRepository.GetAllBySpecification(request1, specification, cancellationToken);
+            var request1 = new PaginationRequest { PageNumber = 1, BatchSize = 1 };
+            var specification = new ByNameSpecification(request2.Login);
+
+            return await _userRepository.GetAllBySpecification(request1 ,specification, cancellationToken);
         }
 
         public async Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken)

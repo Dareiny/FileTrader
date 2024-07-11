@@ -1,5 +1,7 @@
 ﻿using FileTrader.AppServices.Users.Services;
+using FileTrader.Contracts.General;
 using FileTrader.Contracts.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -34,7 +36,7 @@ namespace FileTrader.API.Controllers
         [ProducesResponseType(typeof(ResultWithPagination<UserDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetAllUsers([FromQuery] GetAllUsersRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllUsers([FromQuery] PaginationRequest request, CancellationToken cancellationToken)
         {
             var result = await _userService.GetUsersAsync(request ,cancellationToken);
             return Ok(result);
@@ -51,9 +53,9 @@ namespace FileTrader.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetAllUsersByName([FromQuery] GetAllUsersRequest request1, [FromQuery] UsersByNameRequest request2 ,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetUserByName([FromQuery] UsersByNameRequest request2 ,CancellationToken cancellationToken)
         {
-            var result = await _userService.GetUsersByNameAsync(request1, request2, cancellationToken);
+            var result = await _userService.GetUserByNameAsync(request2, cancellationToken);
             return Ok(result);
         }
 
@@ -63,6 +65,7 @@ namespace FileTrader.API.Controllers
         /// <param name="id">Идентификатор <see cref="Guid"/>.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Запись пользователя <see cref="OkObjectResult"/>.</returns>
+        [AllowAnonymous]
         [HttpGet("user")]
         [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -79,6 +82,7 @@ namespace FileTrader.API.Controllers
         /// <param name="request">Запрос контракта на создание записи пользователя.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Код создания <see cref="CreatedAtActionResult"/>.</returns>
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(typeof(UserDTO),(int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -101,6 +105,7 @@ namespace FileTrader.API.Controllers
         /// <param name="request">Данные для обновления пользователя.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Результат обновления.</returns>
+        
         [HttpPut("{id:Guid}")]
         [ProducesResponseType(typeof(IEnumerable<UserDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -118,9 +123,9 @@ namespace FileTrader.API.Controllers
                 return NotFound("User not found.");
             }
 
-            if (!string.IsNullOrEmpty(request.UserName))
+            if (!string.IsNullOrEmpty(request.Login))
             {
-                userToUpdate.UserName = request.UserName;
+                userToUpdate.Login = request.Login;
             }
 
             if (!string.IsNullOrEmpty(request.UserEmail))
@@ -148,6 +153,7 @@ namespace FileTrader.API.Controllers
         [HttpDelete("{id:Guid}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid id, CancellationToken cancellationToken)
         {
             await _userService.DeleteAsync(id, cancellationToken);

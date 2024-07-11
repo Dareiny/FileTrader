@@ -31,5 +31,12 @@ namespace FileTrader.Domain.Files.Entity
         /// Длина файла.
         /// </summary>
         public int Length { get; set; }
+
+        /// <summary>
+        /// Идентификатор владельца.
+        /// </summary>
+        public Guid OwnerId { get; set; }
+
+        public bool GeneralAccess { get; set; }
     }
 }

@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileTrader.Contracts.Users
+namespace FileTrader.Contracts.General
 {
     /// <summary>
     /// Запрос на получение всех пользователей.
     /// </summary>
-    public class GetAllUsersRequest
+    public class PaginationRequest
     {
         /// <summary>
         /// Номер страницы списка пользователей (1 по стандарту).

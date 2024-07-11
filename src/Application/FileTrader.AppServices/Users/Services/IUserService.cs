@@ -1,4 +1,5 @@
-﻿using FileTrader.Contracts.Users;
+﻿using FileTrader.Contracts.General;
+using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace FileTrader.AppServices.Users.Services
         /// Возвращает всех пользователей.
         /// </summary>
         /// <returns>Список пользователей <see cref="UserDTO"/>.</returns>
-        Task<ResultWithPagination<UserDTO>> GetUsersAsync(GetAllUsersRequest request,CancellationToken cancellationToken);
+        Task<ResultWithPagination<UserDTO>> GetUsersAsync(PaginationRequest request,CancellationToken cancellationToken);
 
         /// <summary>
         /// Возвращает пользователей по имени.
@@ -26,7 +27,7 @@ namespace FileTrader.AppServices.Users.Services
         /// <param name="request">Запрос.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns>Список пользователей <see cref="UserDTO"/>Коллекция моделей пользователей.</returns>
-        Task<ResultWithPagination<UserDTO>> GetUsersByNameAsync(GetAllUsersRequest request1, UsersByNameRequest request2, CancellationToken cancellationToken);
+        Task<ResultWithPagination<UserDTO>> GetUserByNameAsync(UsersByNameRequest request2, CancellationToken cancellationToken);
 
 
         /// <summary>

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace FileTrader.Contracts.Accounts
 {
-    public class CreateAccountRequest
+    public class AccountLoginRequest
     {
+        public string Login { get; set; }
+        public string Password { get; set; }
     }
 }

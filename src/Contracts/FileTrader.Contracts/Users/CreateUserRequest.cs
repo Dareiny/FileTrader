@@ -18,7 +18,7 @@ namespace FileTrader.Contracts.Users
         /// </summary>
         [Required]
         [StringLength(20)]
-        public string UserName { get; set; }
+        public string Login { get; set; }
         /// <summary>
         /// Электронная почта пользователя.
         /// </summary>
@@ -30,7 +30,7 @@ namespace FileTrader.Contracts.Users
         /// Пароль пользователя
         /// </summary>
         [StringLength(30)]
-        [AllowNull]
+        [Required]
         public string Password  { get; set; }
     }
 }

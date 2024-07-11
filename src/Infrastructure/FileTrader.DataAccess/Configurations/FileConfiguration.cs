@@ -12,7 +12,7 @@ namespace FileTrader.DataAccess.Configurations
     /// <summary>
     /// Файл конфигурации сущности файла.
     /// </summary>
-    public class UserFileConfiguration : IEntityTypeConfiguration<UserFile>
+    public class FileConfiguration : IEntityTypeConfiguration<UserFile>
     {
         /// <inheritdoc />
         public void Configure(EntityTypeBuilder<UserFile> builder)
@@ -20,6 +20,7 @@ namespace FileTrader.DataAccess.Configurations
             builder.ToTable("UserFiles").HasKey(t => t.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Content).IsRequired().HasMaxLength(255);
+
 
         }
     }

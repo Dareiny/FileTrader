@@ -31,5 +31,9 @@ namespace FileTrader.Contracts.UserFiles
         /// </summary>
         public int Length { get; set; }
 
+        /// <summary>
+        /// Идентификатор владельца.
+        /// </summary>
+        public Guid OwnerId { get; set; }
     }
 }
