@@ -1,11 +1,5 @@
 ﻿using FileTrader.Domain.Base;
-using FileTrader.Domain.Users.Entity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileTrader.Infrastructure.Repository
 {
@@ -32,7 +26,7 @@ namespace FileTrader.Infrastructure.Repository
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await GetByIdAsync(id,cancellationToken);
+            var entity = await GetByIdAsync(id, cancellationToken);
             if (entity == null)
             {
                 throw new KeyNotFoundException($"Entity with id {id} not found.");

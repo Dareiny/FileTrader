@@ -7,21 +7,13 @@ using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
 using FileTrader.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FileTrader.DataAccess.Users.Repository
 {
     /// <inheritdoc />
     public class UserRepository : IUserRepository
     {
- 
+
         private readonly IRepository<User> _repository;
         private readonly IMapper _mapper;
         public UserRepository(IRepository<User> repository, IMapper mapper)
@@ -30,7 +22,7 @@ namespace FileTrader.DataAccess.Users.Repository
             _mapper = mapper;
         }
 
-        public async Task AddAsync(User entity,CancellationToken cancellationToken)
+        public async Task AddAsync(User entity, CancellationToken cancellationToken)
         {
             await _repository.AddAsync(entity, cancellationToken);
         }
@@ -51,7 +43,7 @@ namespace FileTrader.DataAccess.Users.Repository
         //    var elementsCount = await query.CountAsync(cancellationToken);
         //    result.AvailablePages = elementsCount/request.BatchSize;
         //    if (elementsCount % request.BatchSize > 0) result.AvailablePages++;
-            
+
         //    var paginationQuery = await query
         //        .OrderBy(user => user.Id)
         //        .Skip(request.BatchSize * (request.PageNumber - 1))
@@ -63,9 +55,9 @@ namespace FileTrader.DataAccess.Users.Repository
         //    return result;
         //}
 
-        public async Task<ResultWithPagination<UserDTO>> GetAllBySpecification(PaginationRequest request, Specification<User> specification, CancellationToken cancellationToken)
+        public async Task<ResultWithPagination<UserInfoDTO>> GetAllBySpecification(PaginationRequest request, Specification<User> specification, CancellationToken cancellationToken)
         {
-            var result = new ResultWithPagination<UserDTO>();
+            var result = new ResultWithPagination<UserInfoDTO>();
 
             var query = _repository.GetAll().Where(specification.ToExpression());
 
@@ -77,12 +69,14 @@ namespace FileTrader.DataAccess.Users.Repository
                .OrderBy(user => user.Id)
                .Skip(request.BatchSize * (request.PageNumber - 1))
                .Take(request.BatchSize)
-               .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+               .ProjectTo<UserInfoDTO>(_mapper.ConfigurationProvider)
                .ToListAsync();
 
             result.Result = paginationQuery;
             return result;
         }
+
+
 
         public async Task<UserDTO> GetByIdAsync(Specification<User> specification, CancellationToken cancellationToken)
         {
@@ -92,6 +86,12 @@ namespace FileTrader.DataAccess.Users.Repository
 
         }
 
+        public async Task<UserDTO> GetByNameAsync(Specification<User> specification, CancellationToken cancellationToken)
+        {
+            return await _repository.GetAll().Where(specification.ToExpression())
+                .ProjectTo<UserDTO>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+        }
 
         public async Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken)
         {

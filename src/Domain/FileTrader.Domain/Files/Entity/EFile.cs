@@ -1,16 +1,11 @@
 ﻿using FileTrader.Domain.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileTrader.Domain.Files.Entity
 {
     /// <summary>
     /// Сущность файла.
     /// </summary>
-    public class UserFile : BaseEntity
+    public class EFile : BaseEntity
     {
         /// <summary>
         /// Имя файла.
@@ -37,6 +32,9 @@ namespace FileTrader.Domain.Files.Entity
         /// </summary>
         public Guid OwnerId { get; set; }
 
+        /// <summary>
+        /// Доступ к файлу.
+        /// </summary>
         public bool GeneralAccess { get; set; }
     }
 }

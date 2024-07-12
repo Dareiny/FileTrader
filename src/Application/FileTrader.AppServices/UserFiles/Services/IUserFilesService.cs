@@ -1,11 +1,7 @@
-﻿using FileTrader.Contracts.UserFiles;
+﻿using FileTrader.AppServices.Specifications;
+using FileTrader.Contracts.General;
+using FileTrader.Contracts.UserFiles;
 using FileTrader.Domain.Files.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileTrader.AppServices.UserFiles.Services
 {
@@ -15,12 +11,21 @@ namespace FileTrader.AppServices.UserFiles.Services
     public interface IUserFilesService
     {
         /// <summary>
-        /// Получение информации о файле.
+        /// Получение информации о файле по идентификатору.
         /// </summary>
         /// <param name="Id">Идентификатор файла.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
-        /// <returns>Информация о файле.</returns>
+        /// <returns>Информация о файле <see cref="FileInfoDTO"/>.</returns>
         Task<FileInfoDTO> GetInfoByIdAsync(Guid Id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Возвращает все доступные файлы.
+        /// </summary>
+        /// <param name="request">Запрос на создание страниц.</param>
+        /// <param name="specification">Спецификация.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns>Список файлов <see cref="FileInfoDTO"/>.</returns>
+        public Task<ResultWithPagination<FileInfoDTO>> GetFilesAsync(PaginationRequest request, Specification<EFile> specification, CancellationToken cancellationToken);
 
         /// <summary>
         /// Удаляет файл.
@@ -29,6 +34,14 @@ namespace FileTrader.AppServices.UserFiles.Services
         /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns></returns>
         Task DeleteByIdAsync(Guid Id, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Обновляет доступ к файлу.
+        /// </summary>
+        /// <param name="request">Запрос обновления</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
+        /// <returns></returns>
+        Task UpdateAccessAsync(UpdateAccessRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Загрузка файла в систему.

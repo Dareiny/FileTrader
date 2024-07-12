@@ -2,15 +2,8 @@
 using FileTrader.AppServices.Users.Services;
 using FileTrader.Contracts.Accounts;
 using FileTrader.Contracts.Users;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
 using System.Text;
 
 namespace FileTrader.API.Controllers
@@ -25,6 +18,10 @@ namespace FileTrader.API.Controllers
         private IConfiguration _configuration;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+
+        /// <summary>
+        /// Инициализация экземпляра
+        /// </summary>
         public AccountController(IConfiguration configuration, ITokenService tokenService, IUserService userService)
         {
             _configuration = configuration;
@@ -36,19 +33,21 @@ namespace FileTrader.API.Controllers
         /// <summary>
         /// Создать сессию.
         /// </summary>
-        /// <param name="request">Запрос.</param>
+        /// <param name="request">Запрос регистрации.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
-        /// <returns>Статус операции.</returns>
+        /// <returns>Статус операции <see cref="OkObjectResult"/>.</returns>
         [HttpPost("register")]
         public async Task<IActionResult> RegisterAccount([FromQuery] CreateUserRequest request, CancellationToken cancellationToken)
         {
             // Создаём аккаунт
             var userId = await _userService.AddAsync(request, cancellationToken);
-
+            var user = await _userService.GetByIdAsync(userId, cancellationToken);
 
             // Получаем токен
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
-            var token = await _tokenService.GenerateToken(request, key);
+
+
+            var token = await _tokenService.GenerateToken(user, key);
             var TokenOut = new TokenDTO
             {
                 TokenId = new JwtSecurityTokenHandler().WriteToken(token)
@@ -62,25 +61,32 @@ namespace FileTrader.API.Controllers
         /// <summary>
         /// Вход в сессию.
         /// </summary>
-        /// <param name="request">Запрос.</param>
+        /// <param name="request">Запрос авторизации.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
-        /// <returns>Статус операции.</returns>
+        /// <returns>Статус операции <see cref="OkObjectResult"/>.</returns>
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromQuery] AccountLoginRequest request, CancellationToken cancellationToken)
         {
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
             var userbyNameRequest = new UsersByNameRequest { Login = request.Login };
-            var userCollection = await _userService.GetUserByNameAsync(userbyNameRequest, cancellationToken);
-            var user = userCollection.Result.FirstOrDefault();
+            var user = await _userService.GetUserByNameAsync(userbyNameRequest, cancellationToken);
+            if (user == null)
+            {
+                return BadRequest("Неверно введён логин или пароль.");
+            }
 
-            if (request.Password != user.Password) {
+            if (request.Password != user.Password)
+            {
                 return BadRequest("Неверно введён логин или пароль.");
             }
 
             var token = await _tokenService.GenerateToken(user, key);
-
-            return Ok(token);
+            var TokenOut = new TokenDTO
+            {
+                TokenId = new JwtSecurityTokenHandler().WriteToken(token)
+            };
+            return Ok(TokenOut);
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileTrader.Contracts.UserFiles
+﻿namespace FileTrader.Contracts.UserFiles
 {
     /// <summary>
     /// Модель информации о файле.
@@ -35,5 +29,10 @@ namespace FileTrader.Contracts.UserFiles
         /// Идентификатор владельца.
         /// </summary>
         public Guid OwnerId { get; set; }
+
+        /// <summary>
+        /// Доступ к файлу.
+        /// </summary>
+        public bool GeneralAccess { get; set; }
     }
 }

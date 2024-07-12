@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace FileTrader.Infrastructure.Repository
 {
@@ -48,7 +43,7 @@ namespace FileTrader.Infrastructure.Repository
         /// </summary>
         /// <param name="id">Идентификатор</param>
         /// <returns></returns>
-        Task DeleteAsync(Guid id,CancellationToken cancellationToken);
+        Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 
     }
 }

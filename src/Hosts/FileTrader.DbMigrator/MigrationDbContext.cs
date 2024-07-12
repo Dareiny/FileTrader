@@ -1,5 +1,4 @@
 ﻿using FileTrader.DataAccess;
-using Microsoft.EntityFrameworkCore;
 
 public class MigrationDbContext : ApplicationDbContext
 {

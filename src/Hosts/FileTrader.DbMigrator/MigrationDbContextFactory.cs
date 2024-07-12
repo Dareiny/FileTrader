@@ -1,5 +1,4 @@
-﻿using FileTrader.DataAccess;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
@@ -14,7 +13,7 @@ public class MigrationDbContextFactory : IDesignTimeDbContextFactory<MigrationDb
         var dbContextOptionsBuilder = new DbContextOptionsBuilder<MigrationDbContext>();
 
         dbContextOptionsBuilder.UseNpgsql("");
-        
+
         return new MigrationDbContext(dbContextOptionsBuilder.Options);
     }
 }

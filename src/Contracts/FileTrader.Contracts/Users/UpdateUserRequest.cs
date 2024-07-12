@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace FileTrader.Contracts.Users
 {
@@ -35,6 +30,6 @@ namespace FileTrader.Contracts.Users
         [StringLength(30)]
         [AllowNull]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string? Password  { get; set; }
+        public string? Password { get; set; }
     }
 }

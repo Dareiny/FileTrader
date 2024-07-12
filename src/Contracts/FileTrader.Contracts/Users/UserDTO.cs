@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileTrader.Contracts.Users
+﻿namespace FileTrader.Contracts.Users
 {
     /// <summary>
-    /// DTO для пользователя.
+    /// Модель пользователя.
     /// </summary>
     public class UserDTO
     {
