@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileTrader.Contracts.Users
+﻿namespace FileTrader.Contracts.General
 {
     /// <summary>
     /// Результат запроса с пагинацией.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ResultWithPagination<T>
+    /// <typeparam name="TModel"></typeparam>
+    public class ResultWithPagination<TModel>
     {
         /// <summary>
         /// Список записей на странице.
         /// </summary>
-        public IEnumerable<T> Result { get; set; }
+        public IEnumerable<TModel> Result { get; set; }
 
         /// <summary>
         /// Количество оставшихся страниц.

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileTrader.Contracts.Users
+﻿namespace FileTrader.Contracts.Users
 {
+    /// <summary>
+    /// Модель для токена.
+    /// </summary>
     public class TokenDTO
     {
+        /// <summary>
+        /// Запись токена.
+        /// </summary>
         public string TokenId { get; set; }
     }
 }

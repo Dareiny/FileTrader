@@ -1,14 +1,9 @@
 ﻿using AutoMapper;
 using FileTrader.AppServices.Specifications;
 using FileTrader.AppServices.UserFiles.Repositories;
+using FileTrader.Contracts.General;
 using FileTrader.Contracts.UserFiles;
 using FileTrader.Domain.Files.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileTrader.AppServices.UserFiles.Services
 {
@@ -23,7 +18,7 @@ namespace FileTrader.AppServices.UserFiles.Services
         /// Инициализирует экземпляр <see cref="UserFilesService"/>.
         /// </summary>
         /// <param name="userFilesRepository"></param>
-        public UserFilesService(IUserFilesRepository userFilesRepository, IMapper mapper) 
+        public UserFilesService(IUserFilesRepository userFilesRepository, IMapper mapper)
         {
             _userFilesRepository = userFilesRepository;
             _mapper = mapper;
@@ -39,16 +34,26 @@ namespace FileTrader.AppServices.UserFiles.Services
             return _userFilesRepository.DownloadAsync(id, cancellationToken);
         }
 
+        public async Task<ResultWithPagination<FileInfoDTO>> GetFilesAsync(PaginationRequest request, Specification<EFile> specification, CancellationToken cancellationToken)
+        {
+            return await _userFilesRepository.GetAllBySpecification(request, specification, cancellationToken);
+        }
+
         public async Task<FileInfoDTO> GetInfoByIdAsync(Guid Id, CancellationToken cancellationToken)
         {
             return await _userFilesRepository.GetInfoByIdAsync(Id, cancellationToken);
         }
 
+        public async Task UpdateAccessAsync(UpdateAccessRequest request, CancellationToken cancellationToken)
+        {
+            await _userFilesRepository.UpdateAccessAsync(request, cancellationToken);
+        }
+
         public async Task<Guid> UploadAsync(FileDTO model, CancellationToken cancellationToken)
         {
-            var file = _mapper.Map<UserFile>(model);
+            var file = _mapper.Map<EFile>(model);
             return await _userFilesRepository.UploadAsync(file, cancellationToken);
         }
     }
- }
+}
 

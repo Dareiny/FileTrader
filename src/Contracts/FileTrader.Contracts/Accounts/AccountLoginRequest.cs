@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileTrader.Contracts.Accounts
+﻿namespace FileTrader.Contracts.Accounts
 {
+    /// <summary>
+    /// Запрос на авторизацию.
+    /// </summary>
     public class AccountLoginRequest
     {
         public string Login { get; set; }

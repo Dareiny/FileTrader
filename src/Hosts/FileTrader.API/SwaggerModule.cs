@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FileTrader.API.Controllers;
+using FileTrader.Contracts.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -11,8 +13,9 @@ namespace FileTrader.API
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(type => type.FullName.Replace("+", "_"));
-                //c.SwaggerDoc("v1", new OpenApiInfo {Title = "Api", Version = "v1" });
-
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api для документов", Version = "v1" });
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(UserController).Assembly.GetName().Name}.xml"));
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{typeof(UserDTO).Assembly.GetName().Name}.xml"));
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
@@ -46,9 +49,9 @@ namespace FileTrader.API
                 });
             });
 
-                return services;
-            }
+            return services;
         }
-
     }
+
+}
 

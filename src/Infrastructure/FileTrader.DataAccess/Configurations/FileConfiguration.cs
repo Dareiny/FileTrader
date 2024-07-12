@@ -1,21 +1,16 @@
 ﻿using FileTrader.Domain.Files.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileTrader.DataAccess.Configurations
 {
     /// <summary>
     /// Файл конфигурации сущности файла.
     /// </summary>
-    public class FileConfiguration : IEntityTypeConfiguration<UserFile>
+    public class FileConfiguration : IEntityTypeConfiguration<EFile>
     {
         /// <inheritdoc />
-        public void Configure(EntityTypeBuilder<UserFile> builder)
+        public void Configure(EntityTypeBuilder<EFile> builder)
         {
             builder.ToTable("UserFiles").HasKey(t => t.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(255);

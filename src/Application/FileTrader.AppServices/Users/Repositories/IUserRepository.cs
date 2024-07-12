@@ -2,12 +2,6 @@
 using FileTrader.Contracts.General;
 using FileTrader.Contracts.Users;
 using FileTrader.Domain.Users.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileTrader.AppServices.Users.Repositories
 {
@@ -17,44 +11,48 @@ namespace FileTrader.AppServices.Users.Repositories
     public interface IUserRepository
     {
         /// <summary>
-        /// Возвращает всех пользователей.
-        /// </summary>
-        /// <param name="cancellationToken">Токен отмены операции.</param>
-        /// <returns>Список пользователей.</returns>
-        //Task<ResultWithPagination<UserDTO>> GetAllAsync(GetAllUsersRequest request,CancellationToken cancellationToken);
-        /// <summary>
         /// Возвращает пользователей по заданной спецификацией логике.
         /// </summary>
+        /// <param name="request">Запрос на создание страниц.</param>
         /// <param name="specification">Спецификация.</param>
         /// <param name="cancellation">Токен отмены операции.</param>
-        /// <returns></returns>
-        Task<ResultWithPagination<UserDTO>> GetAllBySpecification(PaginationRequest request, Specification<User> specification, CancellationToken cancellation);
+        /// <returns>Список всех пользователей <see cref="UserInfoDTO"/>.</returns>
+        Task<ResultWithPagination<UserInfoDTO>> GetAllBySpecification(PaginationRequest request, Specification<User> specification, CancellationToken cancellation);
 
         /// <summary>
-        /// Возвращает все элементы сущности "пользователи" по идентификатору.
+        /// Возвращает пользователя по идентификатору.
         /// </summary>
-        /// <param name="id">Идентификатор.</param>
+        /// <param name="specification">Спецификация.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns><see cref="UserDTO"/>.</returns>
         Task<UserDTO> GetByIdAsync(Specification<User> specification, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Добавляет записи.
+        /// Возвращает пользователя по имени.
         /// </summary>
-        /// <param name="entity">Записи.</param>
+        /// <param name="specification">Спецификация.</param>
+        /// <param name="cancellationToken">Токен отмены операции.</param>
         /// <returns></returns>
+        Task<UserDTO> GetByNameAsync(Specification<User> specification, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Добавляет пользователя.
+        /// </summary>
+        /// <param name="entity">Запись.</param>
+        /// <returns><see cref="Guid"/>.</returns>
         Task AddAsync(User entity, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Обновляет записи.
+        /// Обновляет запись пользователя.
         /// </summary>
-        /// <param name="entity">Записи.</param>
+        /// <param name="entity">Запись.</param>
         /// <returns></returns>
         Task UpdateAsync(UserDTO entity, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Удаляет записи по идентификатору
+        /// Удаляет пользователя.
         /// </summary>
-        /// <param name="id">Идентификатор</param>
+        /// <param name="id">Идентификатор.</param>
         /// <returns></returns>
         Task DeleteAsync(Guid id, CancellationToken cancellationToken);
     }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FileTrader.Domain.Base
+﻿namespace FileTrader.Domain.Base
 {
     /// <summary>
     /// Базовый класс для всех сущностей.

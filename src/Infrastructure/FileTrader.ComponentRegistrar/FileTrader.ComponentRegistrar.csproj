@@ -13,8 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application\FileTrader.AppServices\FileTrader.AppServices.csproj" />
     <ProjectReference Include="..\..\Contracts\FileTrader.Contracts\FileTrader.Contracts.csproj" />
     <ProjectReference Include="..\..\Domain\FileTrader.Domain\FileTrader.Domain.csproj" />
+    <ProjectReference Include="..\FileTrader.DataAccess\FileTrader.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
