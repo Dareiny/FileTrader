@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33214.272
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{40877FE5-6458-493F-B3A5-9BB9B3EA795A}"
 EndProject
@@ -9,13 +9,77 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{313AA9EE-769E-4937-B5AB-EF06E8A009EA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastrucure", "Infrastrucure", "{7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{E4FD54AA-98B1-48BA-B1F2-5763B2EB1548}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.AppServices", "Application\FileTrader.AppServices\FileTrader.AppServices.csproj", "{1A6AC48A-C025-4AF4-8B77-192C188F46ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.Contracts", "Contracts\FileTrader.Contracts\FileTrader.Contracts.csproj", "{AC0703C6-56DC-4B94-94AD-6B96A67B780F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.Domain", "Domain\FileTrader.Domain\FileTrader.Domain.csproj", "{B2964BD0-5993-435C-AEB3-530B8D169271}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.Infrastructure", "Infrastructure\FileTrader.Infrastructure\FileTrader.Infrastructure.csproj", "{CA4EEEC1-9532-457B-887E-55D93AC8FABD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.ComponentRegistrar", "Infrastructure\FileTrader.ComponentRegistrar\FileTrader.ComponentRegistrar.csproj", "{4DD8FECB-91DF-49E2-8651-407349A0337F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.API", "Hosts\FileTrader.API\FileTrader.API.csproj", "{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileTrader.DataAccess", "Infrastructure\FileTrader.DataAccess\FileTrader.DataAccess.csproj", "{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTrader.DbMigrator", "Hosts\FileTrader.DbMigrator\FileTrader.DbMigrator.csproj", "{4BE248ED-575F-4850-B654-4B5B590DF638}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A6AC48A-C025-4AF4-8B77-192C188F46ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A6AC48A-C025-4AF4-8B77-192C188F46ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A6AC48A-C025-4AF4-8B77-192C188F46ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A6AC48A-C025-4AF4-8B77-192C188F46ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0703C6-56DC-4B94-94AD-6B96A67B780F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0703C6-56DC-4B94-94AD-6B96A67B780F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0703C6-56DC-4B94-94AD-6B96A67B780F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0703C6-56DC-4B94-94AD-6B96A67B780F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2964BD0-5993-435C-AEB3-530B8D169271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2964BD0-5993-435C-AEB3-530B8D169271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2964BD0-5993-435C-AEB3-530B8D169271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2964BD0-5993-435C-AEB3-530B8D169271}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4EEEC1-9532-457B-887E-55D93AC8FABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4EEEC1-9532-457B-887E-55D93AC8FABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4EEEC1-9532-457B-887E-55D93AC8FABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4EEEC1-9532-457B-887E-55D93AC8FABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DD8FECB-91DF-49E2-8651-407349A0337F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DD8FECB-91DF-49E2-8651-407349A0337F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DD8FECB-91DF-49E2-8651-407349A0337F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DD8FECB-91DF-49E2-8651-407349A0337F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{098272F3-2DF8-45C1-95B8-7BAD9D0D267C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE248ED-575F-4850-B654-4B5B590DF638}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1A6AC48A-C025-4AF4-8B77-192C188F46ED} = {40877FE5-6458-493F-B3A5-9BB9B3EA795A}
+		{AC0703C6-56DC-4B94-94AD-6B96A67B780F} = {4D2C2FD2-4823-46FC-8C82-5675B6792042}
+		{B2964BD0-5993-435C-AEB3-530B8D169271} = {313AA9EE-769E-4937-B5AB-EF06E8A009EA}
+		{CA4EEEC1-9532-457B-887E-55D93AC8FABD} = {7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}
+		{4DD8FECB-91DF-49E2-8651-407349A0337F} = {7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}
+		{098272F3-2DF8-45C1-95B8-7BAD9D0D267C} = {E4FD54AA-98B1-48BA-B1F2-5763B2EB1548}
+		{4370E1DF-4BCB-491F-9442-A3D4814EB9E5} = {7FA04926-4A9E-46AD-9DD1-1F69DE294A9F}
+		{4BE248ED-575F-4850-B654-4B5B590DF638} = {E4FD54AA-98B1-48BA-B1F2-5763B2EB1548}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9411B114-4C26-4282-B0CD-223827F3C872}
