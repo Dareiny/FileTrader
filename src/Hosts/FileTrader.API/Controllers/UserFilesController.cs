@@ -166,7 +166,7 @@ namespace FileTrader.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            var file = _userFilesService.GetInfoByIdAsync(id, cancellationToken);
+            var file = await _userFilesService.GetInfoByIdAsync(id, cancellationToken);
             if (file == null) return NotFound();
 
             await _userFilesService.DeleteByIdAsync(id, cancellationToken);

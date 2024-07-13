@@ -122,8 +122,8 @@ namespace FileTrader.API.Controllers
         {
             var id = await GetAuthorizedIdAsync();
 
-            var user = _userService.GetByIdAsync(id, cancellationToken);
-            if (user.Result == null) return NotFound();
+            var user = await _userService.GetByIdAsync(id, cancellationToken);
+            if (user == null) return NotFound();
 
             await _userService.DeleteAsync(id, cancellationToken);
             return NoContent();
