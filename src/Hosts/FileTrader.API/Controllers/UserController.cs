@@ -122,8 +122,11 @@ namespace FileTrader.API.Controllers
         {
             var id = await GetAuthorizedIdAsync();
 
+            var user = _userService.GetByIdAsync(id, cancellationToken);
+            if (user.Result == null) return NotFound();
+
             await _userService.DeleteAsync(id, cancellationToken);
-            return Ok();
+            return NoContent();
         }
 
         private async Task<Guid> GetAuthorizedIdAsync()
@@ -135,7 +138,7 @@ namespace FileTrader.API.Controllers
             // Проверка заголовка
             if (!authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
-                throw new UnauthorizedAccessException("Invalid authorization header format.");
+                throw new UnauthorizedAccessException("Некорректный формат заголовка авторизации.");
             }
 
             // Извлечение токена из заголовка
@@ -165,7 +168,7 @@ namespace FileTrader.API.Controllers
             // Проверка заголовка
             if (!authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
-                throw new UnauthorizedAccessException("Invalid authorization header format.");
+                throw new UnauthorizedAccessException("Некорректный формат заголовка.");
             }
 
             // Извлечение токена из заголовка

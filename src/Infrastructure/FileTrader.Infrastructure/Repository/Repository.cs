@@ -29,7 +29,7 @@ namespace FileTrader.Infrastructure.Repository
             var entity = await GetByIdAsync(id, cancellationToken);
             if (entity == null)
             {
-                throw new KeyNotFoundException($"Entity with id {id} not found.");
+                throw new KeyNotFoundException($"Запись с id {id} не найдена.");
             }
 
             DbSet.Remove(entity);

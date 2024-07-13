@@ -166,6 +166,9 @@ namespace FileTrader.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
+            var file = _userFilesService.GetInfoByIdAsync(id, cancellationToken);
+            if (file == null) return NotFound();
+
             await _userFilesService.DeleteByIdAsync(id, cancellationToken);
             return NoContent();
         }
@@ -247,7 +250,7 @@ namespace FileTrader.API.Controllers
             // Проверка заголовка
             if (!authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
-                throw new UnauthorizedAccessException("Invalid authorization header format.");
+                throw new UnauthorizedAccessException("Некорректный формат заголовка авторизации.");
             }
 
             // Извлечение токена из заголовка
